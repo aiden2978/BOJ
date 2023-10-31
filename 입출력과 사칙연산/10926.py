@@ -1,0 +1,2 @@
+idAlready = input()
+print(idAlready + "??!")

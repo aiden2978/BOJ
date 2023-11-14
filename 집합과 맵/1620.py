@@ -10,6 +10,4 @@ for i in range(N):
     picto.update({str(i+1):pokemon})
 
 for _ in range(M):
-    print(picto[str(input())])
-
-print(type(picto))
+    print(picto[str(sys.stdin.readline().strip())])

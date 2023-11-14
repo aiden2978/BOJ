@@ -1,11 +1,15 @@
-N, M = map(int, input().split( ))
+import sys
 
-pokemon = {}
-for i in range(26):
-    pokemon.update({str(input()):str(i+1)})
+N, M = map(int, sys.stdin.readline().split( ))
 
-pokemonReverse = dict(map(reversed, pokemon.items()))
-pokemon.update(pokemonReverse)
+picto = {}
+
+for i in range(N):
+    pokemon = sys.stdin.readline().strip()
+    picto.update({pokemon:str(i+1)})
+    picto.update({str(i+1):pokemon})
 
 for _ in range(M):
-    print(pokemon[str(input())])
+    print(picto[str(input())])
+
+print(type(picto))

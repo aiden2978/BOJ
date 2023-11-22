@@ -10,20 +10,22 @@ def isPrime(num):
                 return False
         return True
     
-sieve = [1]*(1000000+1)
-for i in range(1, 1000000+1):
-    if isPrime(i) == False:
-        sieve[i] = 0
-    
+sieve = [1]*(1000000)
+sieve[0] = 0
+for i in range(1, 1001):
+    if isPrime(i) == True:
+        for j in range(2*i-1, 1000000, i):
+            sieve[j] = 0
+
 N = int(sys.stdin.readline())
 
 for _ in range(N):
-    n = int(sys.stdin.readline())
-    if n == 4:
+    m = int(sys.stdin.readline())
+    if m == 4:
         print(1)
     else:
         cnt = 0
-        for i in range(3, int(n/2)+1, 2):
-            if sieve[i] and sieve[n-i]:
+        for i in range(3, int(m/2)+1, 2):
+            if sieve[i-1] and sieve[m-i-1]:
                 cnt += 1
-    print(cnt)
+        print(cnt)

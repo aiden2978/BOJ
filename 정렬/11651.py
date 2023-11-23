@@ -21,11 +21,11 @@ def merge(left, right):
     sorted_list = []
 
     while i < len(left) and j < len(right):
-        if left[i][0] < right[j][0]:
+        if left[i][1] < right[j][1]:
             sorted_list.append(left[i])
             i += 1
-        elif left[i][0] == right[j][0]:
-            if left[i][1] < right[j][1]:
+        elif left[i][1] == right[j][1]:
+            if left[i][0] < right[j][0]:
                 sorted_list.append(left[i])
                 i += 1
             else:

@@ -1,10 +1,11 @@
 import sys
 
 N = int(sys.stdin.readline())
-points = []
+members = []
 
 for _ in range(N):
-    points.append(list(map(int, sys.stdin.readline().split( ))))
+    member = list(sys.stdin.readline().split( ))
+    members.append([int(member[0]), member[1].strip()])
 
 def merge_sort2(tosort_list):
     if len(tosort_list) <= 1:
@@ -21,16 +22,9 @@ def merge(left, right):
     sorted_list = []
 
     while i < len(left) and j < len(right):
-        if left[i][0] < right[j][0]:
+        if left[i][0] <= right[j][0]:
             sorted_list.append(left[i])
             i += 1
-        elif left[i][0] == right[j][0]:
-            if left[i][1] < right[j][1]:
-                sorted_list.append(left[i])
-                i += 1
-            else:
-                sorted_list.append(right[j])
-                j += 1
         else:
             sorted_list.append(right[j])
             j += 1
@@ -42,5 +36,5 @@ def merge(left, right):
         j += 1
     return sorted_list
 
-for point in merge_sort2(points):
-    print(*point)
+for member in merge_sort2(members):
+    print(*member)

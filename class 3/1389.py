@@ -1,56 +1,34 @@
 import sys
+from collections import deque
 
-def merge_sort(tosort_list):
-    if len(tosort_list) <= 1:
-        return tosort_list
+N, M = map(int, sys.stdin.readline().split( ))
+
+graph = [[0 for _ in range(N+1)] for _ in range(N+1)]
+
+for _ in range(M):
+    a, b = map(int, sys.stdin.readline().split( ))
+    graph[a][b], graph[b][a] = 1, 1
+
+def bfs(idx):
+    dist = [0 for _ in range(N+1)]
+    q = deque([])
+    for i in range(1, N+1):
+        if graph[idx][i]:
+            dist[i] = 1
+            q.append(i)
+    while q:
+        cur = q.popleft()
+        for i in range(1, N+1):
+            if i != idx and graph[i][cur] and not dist[i]:
+                dist[i] = dist[cur] + 1
+                q.append(i)
+    return sum(dist)
+
+min_value = N**2
+min_person = 0
+for i in range(1, N+1):
+    if bfs(i) < min_value:
+        min_value = bfs(i)
+        min_person = i
     
-    center = int(len(tosort_list)/2)
-    left = tosort_list[:center]
-    right = tosort_list[center:]
-
-    return(merge(merge_sort(left), merge_sort(right)))
-
-def merge(left, right):
-    i, j = 0, 0
-    sorted_list = []
-
-    while i < len(left) and j < len(right):
-        if left[i][1] < right[j][1]:
-            sorted_list.append(left[i])
-            i += 1
-        elif left[i][1] == right[j][1]:
-            if left[i][0] < right[j][0]:
-                sorted_list.append(left[i])
-                i += 1
-            else:
-                sorted_list.append(right[j])
-                j += 1
-        else:
-            sorted_list.append(right[j])
-            j += 1
-    while i < len(left):
-        sorted_list.append(left[i])
-        i += 1
-    while j < len(right):
-        sorted_list.append(right[j])
-        j += 1
-    return sorted_list
-
-N = int(sys.stdin.readline())
-meetings = []
-
-for _ in range(N):
-    time = list(map(int, sys.stdin.readline().split( )))
-    meetings.append(time)
-
-meetings = merge_sort(meetings)
-
-cnt = 0
-start = 0
-
-for i in range(N):
-    if meetings[i][0] >= start:
-        cnt += 1
-        start = meetings[i][1]
-
-print(cnt)
+print(min_person)

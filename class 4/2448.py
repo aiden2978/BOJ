@@ -2,25 +2,19 @@ import sys
 import math
 
 N = int(sys.stdin.readline())
-
-def tri(n):
-    if n == 0:
-        return ([['  *  '], [' * * '], ['*****']])
-    else:
-        newtri = []
-        nostar = empty(n-1)
-        star = tri(n-1)
-        for i in range(3 * (2 ** (n-1))):
-            newtri.append(nostar[i] + star[i] + nostar[i])
-        for i in range(3 * (2 ** (n-1))):
-            newtri.append(star[i] + [' '] + star[i])
-        return newtri
-
-    
-def empty(n):
-    return [[' ' for _ in range(3 * (2 ** (n)))] for _ in range(3 * (2 ** (n)))]
-
 k = int(math.log2(int(N / 3)))
 
+res = [['  *  ', ' * * ', '*****']]
+
+for i in range(1, k+1):
+    newtri = []
+    emptystr = ' ' * (3*(2**(i-1)))
+    for j in range(3*(2**(i-1))):
+        newtri.append(''.join([emptystr, res[i-1][j], emptystr]))
+    for j in range(3*(2**(i-1))):
+        newtri.append(''.join([res[i-1][j], ' ', res[i-1][j]]))
+    res.append(newtri)
+
 for i in range(N):
-    print(*tri(k)[i], sep = '')
+    sys.stdout.write(res[k][i])
+    sys.stdout.write('\n')

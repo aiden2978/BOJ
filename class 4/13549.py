@@ -3,7 +3,7 @@ from collections import deque
 
 N, K = map(int, sys.stdin.readline().split( ))
 
-graph = [-1 for _ in range(200001)] # range(100001) #
+graph = [-1 for _ in range(100001)]
 
 def bfs(idx):
     graph[idx] = 0
@@ -13,10 +13,10 @@ def bfs(idx):
         if cur == K:
             break
         target = cur
-        while 0 < target <= 100000: # 0 < target <= 50000 #
+        while 0 < target <= 50000:
             if graph[2 * target] == -1:
                 graph[2 * target] = graph[target]
-                q.append(target)
+                q.append(2 * target)
             target *= 2
             
         if 100000 >= cur - 1 >= 0:
